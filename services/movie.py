@@ -1,5 +1,5 @@
 from django.db.models import QuerySet
-from db.models import Actor, Genre, Movie
+from db.models import Movie
 
 
 def get_movies(
@@ -38,8 +38,6 @@ def create_movie(
     )
 
     if actors_ids:
-        for actor in actors_ids:
-            movie_inst.actors.add(Actor.objects.get(id=actor))
+        movie_inst.actors.set(actors_ids)
     if genres_ids:
-        for genre in genres_ids:
-            movie_inst.genres.add(Genre.objects.get(id=genre))
+        movie_inst.genres.set(genres_ids)
