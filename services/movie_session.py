@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.db.models import QuerySet
+
 from db.models import MovieSession
 from services.cinema_hall import get_hall_by_id
 from services.movie import get_movie_by_id
@@ -17,15 +18,11 @@ def create_movie_session(
     )
 
 
-def get_movies_sessions(session_date: str = None) -> QuerySet:
+def get_movies_sessions(session_date: str = None) -> QuerySet[MovieSession]:
     if not session_date:
         return MovieSession.objects.all()
-    year, month, day = session_date.split("-")
     return MovieSession.objects.filter(
-        show_time__date=datetime(
-            year=int(year), month=int(month), day=int(day)
-        )
-    )
+        show_time__date=session_date)
 
 
 def get_movie_session_by_id(movie_session_id: int) -> MovieSession:
